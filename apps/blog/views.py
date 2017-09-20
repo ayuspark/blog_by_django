@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from .models import Post
 
@@ -13,3 +13,8 @@ def post_list(request):
         'posts': posts,
     }
     return render(request, 'blog/post_list.html', context)
+
+def post_detail(request, post_pk):
+    # Post.obejct.get(pk=<post_pk>)
+    post = get_object_or_404(Post, post_pk)
+    return render(request, 'blog/post_detail.html', {'post': post})
