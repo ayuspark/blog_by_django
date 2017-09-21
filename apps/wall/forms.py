@@ -4,7 +4,8 @@ from .models import *
 
 class SignInForm(forms.Form):
     email = forms.EmailField()
-    psw = forms.EmailField()
+    psw = forms.CharField(widget=forms.PasswordInput,
+                          label='Password')
 
 
 class RegisterForm(forms.ModelForm):
