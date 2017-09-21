@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import *
@@ -14,7 +15,13 @@ def wall_index(request):
 
 def sign_in(request):
     if request.method == 'POST':
-        form = 
+        form = SignInForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            psw = form.cleaned_data['psw']
+            if not MyUser.objects.get(email=email):
+                messages.error(request, 'Email not found, please register first.')
+
     # if request.method == 'POST':
     #     form = PostForm(request.POST)
     #     if form.is_valid():

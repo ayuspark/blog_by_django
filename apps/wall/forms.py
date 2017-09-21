@@ -4,13 +4,13 @@ from .models import *
 
 class SignInForm(forms.Form):
     email = forms.EmailField()
-
+    psw = forms.EmailField()
 
 
 class RegisterForm(forms.ModelForm):
     
     class Meta:
-        model = User
+        model = MyUser
         exclude = ['is_admin']
 
 

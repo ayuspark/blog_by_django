@@ -6,7 +6,7 @@ from django.utils import timezone
 
 
 # Create your models here.
-class User(models.Model):
+class MyUser(models.Model):
     # User model
     email = models.EmailField(max_length=254)
     fname = models.CharField(max_length=20)
@@ -23,7 +23,7 @@ class Message(models.Model):
     msg = models.TextField(max_length=140)
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(blank=True, null=True)
-    posted_by_user = models.ForeignKey(User, related_name='messages_posted')
+    posted_by_user = models.ForeignKey(MyUser, related_name='messages_posted')
     
     def __str__(self):
         return self.msg
@@ -37,7 +37,7 @@ class Comment(models.Model):
     # Comment model
     comment = models.TextField(max_length=140)
     created_date = models.DateTimeField(default=timezone.now)
-    posted_by_user = models.ForeignKey(User, related_name='comments_posted')
+    posted_by_user = models.ForeignKey(MyUser, related_name='comments_posted')
     parent_message = models.ForeignKey(Message, related_name='children_comments')
 
     def __str__(self):
