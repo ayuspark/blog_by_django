@@ -2,7 +2,12 @@ from django import forms
 from .models import *
 
 
-class UserForm(forms.ModelForm):
+class SignInForm(forms.Form):
+    email = forms.EmailField()
+
+
+
+class RegisterForm(forms.ModelForm):
     
     class Meta:
         model = User
@@ -23,3 +28,4 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('comment',)
         # manually fill in other fields upon form submit
+

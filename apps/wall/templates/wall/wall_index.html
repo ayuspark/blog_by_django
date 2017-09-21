@@ -1,0 +1,22 @@
+{% extends 'wall/base.html' %}
+
+{% block content %}
+<section class="hero">
+    <h1>Welcome to Wall</h1>
+    <h4>This is a message and comment posting web app powered by Django</h4>
+    <button type="button" class="btn btn-default"><a href="/signin">Start</a></button>
+</section>
+<section class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Join us</h3>
+        </div>
+        <div class="col-md-3">
+            <h3>Leave a message and comment on the message</h3>
+        </div>
+        <div class="col-md-3">
+            <h3>See other people's Wall</h3>
+        </div>
+    </div>
+</section>
+{% endblock %}
