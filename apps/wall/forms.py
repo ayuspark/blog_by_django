@@ -9,10 +9,22 @@ class SignInForm(forms.Form):
 
 
 class RegisterForm(forms.ModelForm):
-    
+    psw = forms.CharField(widget=forms.PasswordInput)
+    confirm_psw = forms.CharField(widget=forms.PasswordInput,
+                                  label='Confirm Password',)
+
     class Meta:
         model = MyUser
         exclude = ['is_admin']
+
+    def clean(self):
+        cleaned_data = super(RegisterForm, self).clean()
+        psw = cleaned_data.get('psw')
+        confirm_psw = cleaned_data.get('confirm_psw')
+
+        if psw != confirm_psw:
+            msg = 'Password does not match'
+            return self.add_error('confirm_psw', msg)
 
 
 class MessageForm(forms.ModelForm):

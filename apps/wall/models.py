@@ -9,9 +9,9 @@ from django.utils import timezone
 class MyUser(models.Model):
     # User model
     email = models.EmailField(max_length=254)
-    fname = models.CharField(max_length=20)
-    lname = models.CharField(max_length=20)
-    psw = models.CharField(max_length=20)
+    fname = models.CharField(max_length=20, verbose_name='first name')
+    lname = models.CharField(max_length=20, verbose_name='last name')
+    psw = models.CharField(max_length=20, verbose_name='password')
     is_admin = models.BooleanField(default=False)
 
     def __str__(self):

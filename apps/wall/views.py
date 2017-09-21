@@ -25,8 +25,8 @@ def sign_in(request):
     if request.method == 'POST':
         form = SignInForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
-            psw = form.cleaned_data['psw']
+            email = form.cleaned_data.get('email')
+            psw = form.cleaned_data.get('psw')
             try:
                 get_user = MyUser.objects.get(email=email)
                 if psw == get_user.psw:
@@ -44,19 +44,36 @@ def sign_in(request):
                     messages.error(request, 'Something is wrong.')
             except MyUser.DoesNotExist:
                 messages.error(request, 'Email not found, please register first.')
-    # load SignInForm    
+    # load SignInForm
     else:
         form = SignInForm()
     return render(request, 'wall/sign_in.html', {'form': form})
 
-    # if request.method == 'POST':
-    #     form = PostForm(request.POST)
-    #     if form.is_valid():
-    #         post = form.save(commit=False)
-    #         post.author = request.user
-    #         post.published_date = timezone.now()
-    #         post.save()
-    #         return redirect('post_detail', post_pk=post.pk)
-    # else:
-    #     form = PostForm()
-    # return render(request, 'blog/post_edit.html', {'form': form})
+    
+def register(request):
+    register_state = False
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            psw = form.cleaned_data.get('psw')
+            fname = form.cleaned_data.get('fname')
+            lname = form.cleaned_data.get('lname')
+            try:
+                MyUser.objects.get(email=email)
+                messages.error(request, 'Email exists, please sign in')
+            except MyUser.DoesNotExist:
+                form.save()
+                messages.success(request, 'Success!')
+                register_state = True
+    else:
+        form = RegisterForm()
+    return render(request, 'wall/register.html', {'form': form, 'register': register_state})
+
+
+def dashboard(request):
+    return render(request, 'wall/dashboard.html')
+
+
+def dashboard_admin(request):
+    pass
