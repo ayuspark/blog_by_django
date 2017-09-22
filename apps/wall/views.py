@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import bcrypt
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -29,15 +30,18 @@ def sign_in(request):
             psw = form.cleaned_data.get('psw')
             try:
                 get_user = MyUser.objects.get(email=email)
-                if psw == get_user.psw:
+                # check against bcrypted password
+                hashed_psw = get_user.psw
+                hashed_psw_bool = bcrypt.checkpw(psw.encode(), hashed_psw.encode())
+                if hashed_psw_bool:
                     messages.success(request, 'Success! You are signed in as %s' % (get_user.email))
                     try:
                         request.session['email'] = email
                         request.session['user_id'] = get_user.id
                     except KeyError:
                         request.session['email'] = ''
-                        request.session['email'] = email
                         request.session['user_id'] = 0
+                        request.session['email'] = email
                         request.session['user_id'] = get_user.id
                     if get_user.is_admin:
                         return redirect('wall:dashboard_admin')
@@ -58,14 +62,15 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get('email')
+            # bcrypt password
             psw = form.cleaned_data.get('psw')
-            fname = form.cleaned_data.get('fname')
-            lname = form.cleaned_data.get('lname')
+            hashed_psw = bcrypt.hashpw(psw.encode(), bcrypt.gensalt())
+            new_user = form.save(commit=False)
             try:
-                MyUser.objects.get(email=email)
+                MyUser.objects.get(email=new_user.email)
                 messages.error(request, 'Email exists, please sign in')
             except MyUser.DoesNotExist:
+                new_user.psw = hashed_psw
                 form.save()
                 messages.success(request, 'Success!')
                 register_state = True
@@ -89,7 +94,7 @@ def dashboard_admin(request):
 def user_show(request, user_id):
     user = get_object_or_404(MyUser, id=user_id)
     posted_messages = Message.objects.order_by('-created_date').filter(posted_to_user_id=user_id)
-    comments = Comment.objects.order_by('-created_date').all()
+    comments = Comment.objects.order_by('created_date').all()
     msg_form = MessageForm()
     comment_form = CommentForm()
     context = {
