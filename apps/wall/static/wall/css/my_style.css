@@ -1,3 +1,8 @@
+span.alert {
+    padding: 2px;
+}
+
+
 .msg_section {
     outline: 1px solid #B0C4DE;
     background-color: #FFF5EE;

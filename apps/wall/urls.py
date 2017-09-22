@@ -5,6 +5,7 @@ urlpatterns = [
     url(r'^$', views.wall_index, name='wall_index'),
     url(r'^signin$', views.sign_in, name='sign_in'),
     url(r'^register$', views.register, name='register'),
+    url(r'^register/check_email$', views.check_email, name='check_email'),
     url(r'^dashboard$', views.dashboard, name='dashboard'),
     url(r'^dashboard/admin$', views.dashboard_admin, name='dashboard_admin'),
     url(r'^users/show/(?P<user_id>\d+)$', views.user_show, name='user_show'),

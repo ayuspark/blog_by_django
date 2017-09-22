@@ -33,3 +33,8 @@
         </form>
     </div>
 {% endblock %}
+
+{% block javascript %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'wall/js/register.js' %}"></script>
+{% endblock %}

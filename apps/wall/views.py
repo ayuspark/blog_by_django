@@ -5,6 +5,7 @@ import bcrypt
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.http import JsonResponse
 from .models import *
 from .forms import *
 
@@ -78,6 +79,14 @@ def register(request):
         form = RegisterForm()
     return render(request, 'wall/register.html', {'form': form, 'register': register_state})
 
+
+def check_email(request):
+    email = request.GET.get('email', None)
+    response = {
+        'exists': MyUser.objects.filter(email=email).exists()
+    }
+    print response
+    return JsonResponse(response)
 
 def dashboard(request):
     is_admin = False
