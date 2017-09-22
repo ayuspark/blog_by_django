@@ -1,0 +1,22 @@
+<section class="container msg_section">
+    <div class="msg_div">
+        <!-- render each message -->
+        <div class="row">
+            <h5 class="col-md-8">
+                <a href="{% url 'wall:user_show' user_id=message.posted_by_user_id %}">{{ message.posted_by_user.fname.title }}</a>
+                <span> wrote: </span>
+            </h5>
+            <p class="col-md-4">{{ message.created_date }}</p>
+        </div>
+        <p>{{ message.msg }}</p>
+    </div>
+
+    <div class="comment_div">
+        <!-- comment form -->
+        <form action="{% url 'wall:comment' user_id=user_id for_msg_id=message.id %}" method="POST" class="comment_form">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <input type="submit" class="btn" value="Comment" />
+        </form>
+    </div>
+</section>

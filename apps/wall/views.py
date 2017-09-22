@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import bcrypt
+import json
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -129,6 +130,7 @@ def message_post(request, user_id):
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
+            # save form info into ORM
             posted_by_user = MyUser.objects.get(id=request.session['user_id'])
             posted_to_user = MyUser.objects.get(id=user_id)
             new_msg = form.save(commit=False) 
@@ -136,16 +138,20 @@ def message_post(request, user_id):
             new_msg.posted_to_user = posted_to_user
             new_msg.created_date = timezone.now()
             new_msg.save() 
-            return redirect('wall:user_show', user_id=user_id)
+            msg_for_ajax = Message.objects.get(created_date=new_msg.created_date)
+            context = {
+                'message': msg_for_ajax,
+                'user_id': request.session['user_id'],
+                'comment_form': CommentForm(),
+            }
+            # return redirect('wall:user_show', user_id=user_id,)
+            return render(request, 'wall/a_msg_section.html', context)
 
 
 def comment(request, user_id, for_msg_id):
-    print "I'm here"
     if request.method == 'POST':
-        print "I'm POST"
         form = CommentForm(request.POST)
         if form.is_valid():
-            print "inside form valid"
             posted_by_user = MyUser.objects.get(id=request.session['user_id'])
             parent_message = Message.objects.get(id=for_msg_id)
             new_comment = form.save(commit=False)
@@ -153,5 +159,4 @@ def comment(request, user_id, for_msg_id):
             new_comment.parent_message = parent_message
             new_comment.created_date = timezone.now()
             new_comment.save()
-            print user_id
             return redirect('wall:user_show', user_id=user_id)
