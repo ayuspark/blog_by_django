@@ -17,7 +17,7 @@ def sign_in(request):
     # See if user already signed in
     try:
         if request.session['email']:
-            messages.success(request, 'Success! You are signed in as %s' % (request.session['email']))
+            messages.success(request, 'You are signed in as %s' % (request.session['email']))
     except KeyError:
         request.session['email'] = ''
 
@@ -33,9 +33,12 @@ def sign_in(request):
                     messages.success(request, 'Success! You are signed in as %s' % (get_user.email))
                     try:
                         request.session['email'] = email
+                        request.session['user_id'] = get_user.id
                     except KeyError:
                         request.session['email'] = ''
                         request.session['email'] = email
+                        request.session['user_id'] = 0
+                        request.session['user_id'] = get_user.id
                     if get_user.is_admin:
                         return redirect('wall:dashboard_admin')
                     else:
@@ -72,8 +75,55 @@ def register(request):
 
 
 def dashboard(request):
-    return render(request, 'wall/dashboard.html')
+    is_admin = False
+    all_users = MyUser.objects.all()
+    return render(request, 'wall/dashboard.html', {'is_admin': is_admin, 'all_users': all_users})
 
 
 def dashboard_admin(request):
+    is_admin = True
+    all_users = MyUser.objects.all()
+    return render(request, 'wall/dashboard.html', {'is_admin': is_admin, 'all_users': all_users})
+
+
+def user_show(request, user_id):
+    user = get_object_or_404(MyUser, id=user_id)
+    posted_messages = Message.objects.order_by('-created_date').filter(posted_to_user_id=user_id)
+    comments = Comment.objects.order_by('-created_date').all()
+    msg_form = MessageForm()
+    comment_form = CommentForm()
+    context = {
+        'user': user,
+        'posted_messages': posted_messages,
+        'comments': comments,
+        'msg_form': msg_form,
+        'comment_form': comment_form,
+    }
+    return render(request, 'wall/user_wall.html', context) 
+
+
+
+def user_delete(request, user_id):
+    pass
+
+
+def user_edit(request, user_id):
+    pass
+
+
+def message_post(request, user_id):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            posted_by_user = MyUser.objects.get(id=request.session['user_id'])
+            posted_to_user = MyUser.objects.get(id=user_id)
+            new_msg = form.save(commit=False) 
+            new_msg.posted_by_user = posted_by_user
+            new_msg.posted_to_user = posted_to_user
+            new_msg.created_date = timezone.now()
+            new_msg.save() 
+            return redirect('wall:user_show', user_id=user_id)
+
+
+def comment(request, user_id, for_msg_id):
     pass

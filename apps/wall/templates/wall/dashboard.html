@@ -17,5 +17,37 @@
         <h2>Manage Users</h2>
     {% endif %}
 
+    <table class="table table-striped">
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>User Level</th>
+             {% if is_admin %}
+             <th>Actions</th>
+             {% endif %}
+        </thead>
+        {% for user in all_users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td><a href="{% url 'wall:user_show' user_id=user.id %}">{{ user.fname.title }} {{ user.lname.title }}</a></td>
+            <td>{{ user.email }}</td>
+            {% if user.is_admin %}
+            <td>Admin</td>
+            {% else %}
+            <td>Normal</td>
+            {% endif %}
+            <!-- show admin actions to users -->
+            {% if is_admin %}
+            <td>
+                <span><a href="{% url 'wall:user_edit' user_id=user.id %}">Edit</a></span>
+                <span> | </span>
+                <span><a href="{% url 'wall:user_delete' user_id=user.id %}">Remove</a></span>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+
 
 {% endblock %}

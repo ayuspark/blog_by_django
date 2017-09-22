@@ -23,7 +23,8 @@ class Message(models.Model):
     msg = models.TextField(max_length=140)
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(blank=True, null=True)
-    posted_by_user = models.ForeignKey(MyUser, related_name='messages_posted')
+    posted_by_user = models.ForeignKey(MyUser, related_name='messages_posted_by')
+    posted_to_user = models.ForeignKey(MyUser, related_name='messages_posted_to')
     
     def __str__(self):
         return self.msg

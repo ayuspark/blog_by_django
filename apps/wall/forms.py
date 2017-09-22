@@ -9,7 +9,8 @@ class SignInForm(forms.Form):
 
 
 class RegisterForm(forms.ModelForm):
-    psw = forms.CharField(widget=forms.PasswordInput)
+    psw = forms.CharField(widget=forms.PasswordInput,
+                          label='Password',)
     confirm_psw = forms.CharField(widget=forms.PasswordInput,
                                   label='Confirm Password',)
 
@@ -32,6 +33,12 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ('msg',)
+        labels = {
+            'msg': '',
+        }
+        widgets = {
+            'msg': forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
+        }
         # manually fill in other fields upon form submit
 
 
