@@ -51,12 +51,13 @@
                 <p>{{ comment.comment }}</p>
             {% endif %}
         {% endfor %}
-
-    <form action="{% url 'wall:comment' for_msg_id=message.id %}" method="POST" class="comment_form">
-        {% csrf_token %}
-        {{ msg_form.as_p }}
-        <input type="submit" class="btn" value="Comment" />
-    </form>
+        
+        <!-- comment form -->
+        <form action="{% url 'wall:comment' for_msg_id=message.id %}" method="POST" class="comment_form">
+            {% csrf_token %}
+            {{ msg_form.as_p }}
+            <input type="submit" class="btn" value="Comment" />
+        </form>
     {% endfor %}
 </section>
 
