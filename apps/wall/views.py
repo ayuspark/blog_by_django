@@ -126,4 +126,18 @@ def message_post(request, user_id):
 
 
 def comment(request, user_id, for_msg_id):
-    pass
+    print "I'm here"
+    if request.method == 'POST':
+        print "I'm POST"
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            print "inside form valid"
+            posted_by_user = MyUser.objects.get(id=request.session['user_id'])
+            parent_message = Message.objects.get(id=for_msg_id)
+            new_comment = form.save(commit=False)
+            new_comment.posted_by_user = posted_by_user
+            new_comment.parent_message = parent_message
+            new_comment.created_date = timezone.now()
+            new_comment.save()
+            print user_id
+            return redirect('wall:user_show', user_id=user_id)

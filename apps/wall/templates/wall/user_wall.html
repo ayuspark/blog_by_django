@@ -26,19 +26,22 @@
     </form>
 </section>
 
-<section class="container">
-    <!-- render each message -->
-    {% for message in posted_messages %}
-    <div class="row">
-        <h5 class="col-md-8">
-            <a href="{% url 'wall:user_show' user_id=message.posted_by_user_id %}">{{ message.posted_by_user.fname.title }}</a>
-            <span> wrote: </span>
-        </h5>
-        <p class="col-md-4">{{ message.created_date }}</p>
+{% for message in posted_messages %}
+<section class="container msg_section">
+    <div class="msg_div">
+        <!-- render each message -->
+        <div class="row">
+            <h5 class="col-md-8">
+                <a href="{% url 'wall:user_show' user_id=message.posted_by_user_id %}">{{ message.posted_by_user.fname.title }}</a>
+                <span> wrote: </span>
+            </h5>
+            <p class="col-md-4">{{ message.created_date }}</p>
+        </div>
+        <p>{{ message.msg }}</p>
     </div>
-    <p>{{ message.msg }}</p>
 
-        <!-- nest comments in message block -->
+    <div class="comment_div">
+        <!-- nest comments in each message section -->
         {% for comment in comments %}
             {% if comment.parent_message_id == message.id %}
                 <div class="row">
@@ -51,15 +54,16 @@
                 <p>{{ comment.comment }}</p>
             {% endif %}
         {% endfor %}
-        
+
         <!-- comment form -->
-        <form action="{% url 'wall:comment' for_msg_id=message.id %}" method="POST" class="comment_form">
+        <form action="{% url 'wall:comment' user_id=user.id for_msg_id=message.id %}" method="POST" class="comment_form">
             {% csrf_token %}
-            {{ msg_form.as_p }}
+            {{ comment_form.as_p }}
             <input type="submit" class="btn" value="Comment" />
         </form>
-    {% endfor %}
+    </div>
 </section>
+{% endfor %}
 
 
 

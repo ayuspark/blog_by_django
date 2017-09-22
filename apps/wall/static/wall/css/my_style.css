@@ -1,0 +1,19 @@
+.msg_section {
+    outline: 1px solid #B0C4DE;
+    background-color: #FFF5EE;
+    margin: 2rem 0;
+    padding: 1rem;
+}
+
+.msg_div {
+    background-color: #F0FFF0;
+    margin: 1rem auto;
+    padding: 1.3rem;
+}
+
+.comment_div {
+    width: 80%;
+    float: right;
+    clear: both;
+}
+
