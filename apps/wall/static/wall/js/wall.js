@@ -23,19 +23,20 @@ $(function(){
             data: $(this).serialize(),
             success: function(response){
                 $('.msg_wall').prepend(response);
+                $('.leave_msg_form')[0].reset();
             }
-        })
+        });
     })
 
     $('.comment_form').on('submit', function(e){
         e.preventDefault();
-        let comment_div = $(this);
+        let $comment_div = $(this);
         $.ajax({
             url: $(this).attr('action'),
             method: 'post',
             data: $(this).serialize(),
             success: function(response){
-                comment_div.prepend(response);
+                $comment_div.prepend(response);
             }
         })
     })
