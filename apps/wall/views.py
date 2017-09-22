@@ -144,7 +144,6 @@ def message_post(request, user_id):
                 'user_id': request.session['user_id'],
                 'comment_form': CommentForm(),
             }
-            # return redirect('wall:user_show', user_id=user_id,)
             return render(request, 'wall/a_msg_section.html', context)
 
 
@@ -159,4 +158,11 @@ def comment(request, user_id, for_msg_id):
             new_comment.parent_message = parent_message
             new_comment.created_date = timezone.now()
             new_comment.save()
-            return redirect('wall:user_show', user_id=user_id)
+            comment_for_ajax = Comment.objects.get(created_date=new_comment.created_date)
+            context = {
+                'comment': comment_for_ajax,
+                'user_id': request.session['user_id'],
+            }
+            # return redirect('wall:user_show', user_id=user_id)
+            return render(request, 'wall/a_comment_div.html', context)
+
