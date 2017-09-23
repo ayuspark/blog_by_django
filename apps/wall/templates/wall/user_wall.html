@@ -27,6 +27,7 @@
     </form>
 </section>
 
+<!-- beginning of message wall -->
 <div class="msg_wall">
     {% for message in posted_messages %}
     <section class="container msg_section">
@@ -65,8 +66,8 @@
             </form>
         </div>
     </section>
+    {% endfor %}
 </div>
-{% endfor %}
 {% endblock %}
 
 {% block javascript %}
