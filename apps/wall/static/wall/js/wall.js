@@ -23,22 +23,27 @@ $(function(){
             data: $(this).serialize(),
             success: function(response){
                 $('.msg_wall').prepend(response);
-                $('.leave_msg_form')[0].reset();
             }
         });
+        console.log('msg form', $('.leave_msg_form')[0]);
+        $('.leave_msg_form')[0].reset();
     })
 
     $('.comment_form').on('submit', function(e){
         e.preventDefault();
-        let $comment_div = $(this);
+        let $curr_div_id = $(this).attr('div_id'), select_id = '';
         $.ajax({
             url: $(this).attr('action'),
             method: 'post',
             data: $(this).serialize(),
             success: function(response){
-                $comment_div.prepend(response);
+                select_id = '#' + $curr_div_id;
+                console.log('sele',select_id);
+                $(select_id).append(response);
             }
-        })
+        });
+        // does not work
+        $(this)[0].reset;
     })
 
 

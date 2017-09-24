@@ -163,6 +163,6 @@ def comment(request, user_id, for_msg_id):
                 'comment': comment_for_ajax,
                 'user_id': request.session['user_id'],
             }
-            # return redirect('wall:user_show', user_id=user_id)
-            return render(request, 'wall/a_comment_div.html', context)
+    print context
+    return render(request, 'wall/a_comment_div.html', context)
 

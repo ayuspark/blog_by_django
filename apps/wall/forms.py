@@ -48,7 +48,9 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('comment',)
         widgets = {
-            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': '1'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control',
+                                             'rows': '1',
+                                             'id': '', }),
         }
         # manually fill in other fields upon form submit
 
