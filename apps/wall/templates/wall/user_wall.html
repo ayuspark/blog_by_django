@@ -17,7 +17,7 @@
     <h4>Email: {{ user.email }}</h4>
 </section>
 
-<!-- leave message form -->
+<!-- leave-message form -->
 <section class="container">
     <form action="{% url 'wall:message_post' user_id=user.id %}" method="POST" class="leave_msg_form">
         {% csrf_token %}
@@ -31,8 +31,9 @@
 <div class="msg_wall">
     {% for message in posted_messages %}
     <section class="container msg_section">
+
+        <!-- render each message -->
         <div class="msg_div">
-            <!-- render each message -->
             <div class="row">
                 <h5 class="col-md-6">
                     <a href="{% url 'wall:user_show' user_id=message.posted_by_user_id %}">{{ message.posted_by_user.fname.title }}</a>
@@ -42,9 +43,10 @@
             </div>
             <p>{{ message.msg }}</p>
         </div>
+        <!-- end of the message body -->
 
+        <!-- nest comments in each message section -->
         <div class="comment_div">
-            <!-- nest comments in each message section -->
             {% for comment in comments %}
                 {% if comment.parent_message_id == message.id %}
                 <div class="row">
@@ -58,7 +60,7 @@
                 {% endif %}
             {% endfor %}
             
-            <!-- to add new comment -->
+            <!--  a div to append ajax-handled new comment -->
             <div id="user_id_{{user.id}}_msg_id_{{message.id}}">
 
             </div>

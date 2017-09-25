@@ -12,8 +12,12 @@
     </div>
 
     <div class="comment_div">
+        <!--  a div to append ajax-handled new comment -->
+        <div id="user_id_{{user.id}}_msg_id_{{message.id}}">
+
+        </div>
         <!-- comment form -->
-        <form action="{% url 'wall:comment' user_id=user_id for_msg_id=message.id %}" method="POST" class="comment_form">
+        <form action="{% url 'wall:comment' user_id=user_id for_msg_id=message.id %}" method="POST" class="comment_form" div_id="user_id_{{user.id}}_msg_id_{{message.id}}">
             {% csrf_token %}
             {{ comment_form.as_p }}
             <input type="submit" class="btn" value="Comment" />

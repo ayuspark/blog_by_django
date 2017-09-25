@@ -29,7 +29,7 @@ $(function(){
         $('.leave_msg_form')[0].reset();
     })
 
-    $('.comment_form').on('submit', function(e){
+    $('.msg_wall').on('submit', 'form',function(e){
         e.preventDefault();
         let $curr_div_id = $(this).attr('div_id'), select_id = '';
         $.ajax({
@@ -43,7 +43,7 @@ $(function(){
             }
         });
         // does not work
-        $(this)[0].reset;
+        $(this).reset();
     })
 
 
