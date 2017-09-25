@@ -19,23 +19,26 @@
 
 <!-- leave-message form -->
 <section class="container">
-    <form action="{% url 'wall:message_post' user_id=user.id %}" method="POST" class="leave_msg_form">
-        {% csrf_token %}
-        <h3>Leave a message for {{ user.fname.title }}</h3>
-        {{ msg_form.as_p }}
-        <input type="submit" class="btn" value="Post"/>
-    </form>
+    <div class="row">
+        <form action="{% url 'wall:message_post' user_id=user.id %}" method="POST" class="leave_msg_form">
+            {% csrf_token %}
+            <h3>Leave a message for {{ user.fname.title }}</h3>
+            {{ msg_form.as_p }}
+            <input type="submit" class="btn" value="Post"/>
+        </form>
+    </div>
 </section>
 
 <!-- beginning of message wall -->
-<div class="msg_wall">
+<div class="container msg_wall">
     {% for message in posted_messages %}
-    <section class="container msg_section">
+
+    <section class="msg_section">
 
         <!-- render each message -->
         <div class="msg_div">
             <div class="row">
-                <h5 class="col-md-6">
+                <h5 class="col-md-8">
                     <a href="{% url 'wall:user_show' user_id=message.posted_by_user_id %}">{{ message.posted_by_user.fname.title }}</a>
                     <span> wrote: </span>
                 </h5>
@@ -62,6 +65,7 @@
             
             <!--  a div to append ajax-handled new comment -->
             <div id="user_id_{{user.id}}_msg_id_{{message.id}}">
+
             </div>
 
             <!-- comment form -->
