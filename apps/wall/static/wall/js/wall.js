@@ -42,8 +42,7 @@ $(function(){
                 $(select_id).append(response);
             }
         });
-        // does not work
-        $(this).reset();
+        $(this)[0].reset();
     })
 
 
