@@ -86,7 +86,7 @@ def check_email(request):
     response = {
         'exists': MyUser.objects.filter(email=email).exists()
     }
-    print response
+    # print response
     return JsonResponse(response)
 
 def dashboard(request):
