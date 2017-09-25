@@ -163,6 +163,5 @@ def comment(request, user_id, for_msg_id):
                 'comment': comment_for_ajax,
                 'user_id': request.session['user_id'],
             }
-    print context
     return render(request, 'wall/a_comment_div.html', context)
 
