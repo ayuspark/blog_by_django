@@ -20,7 +20,7 @@
 <!-- leave-message form -->
 <section class="container">
     <div class="row">
-        <form action="{% url 'wall:message_post' user_id=user.id %}" method="POST" class="leave_msg_form">
+        <form action="{% url 'wall:message_post' user_id=user.id %}" method="POST" class="leave_msg_form col-md-8">
             {% csrf_token %}
             <h3>Leave a message for {{ user.fname.title }}</h3>
             {{ msg_form.as_p }}
@@ -37,7 +37,7 @@
 
         <!-- render each message -->
         <div class="msg_div">
-            <div class="row">
+            <div class="row col-md-12">
                 <h5 class="col-md-8">
                     <a href="{% url 'wall:user_show' user_id=message.posted_by_user_id %}">{{ message.posted_by_user.fname.title }}</a>
                     <span> wrote: </span>
