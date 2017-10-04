@@ -1,0 +1,39 @@
+body {
+    background-color: #FAFAFA;
+}
+
+span.alert {
+    padding: 2px;
+}
+
+.navbar .container {
+    width: 100%;
+}
+
+.container {
+    width: 720px;
+}
+
+.msg_section {
+    border: 0 solid #474747;
+    border-radius: 3px;
+    background-color: #e0e0e0;
+    margin: 2rem 0;
+    padding: 1rem;
+}
+
+.msg_div {
+    background-color: #474747;
+    color: #F2F2F2;
+    margin: 1rem auto;
+    padding: 1.3rem;
+}
+
+.comment_div {
+    width: 80%;
+    margin-left: 4rem;
+    /* float: right;
+    clear: both; */
+    color: #474747;
+}
+

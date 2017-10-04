@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('apps.wall.urls', namespace='wall')),
     url(r'^blog/', include('apps.blog.urls', namespace='blog')),
+    url(r'^chat/', include('apps.chatroom.urls', namespace='chatroom')),
 ]
 
 if settings.DEBUG:

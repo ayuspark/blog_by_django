@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'apps.blog',
     'apps.wall',
+    'apps.chatroom',
 ]
 
 MIDDLEWARE = [
