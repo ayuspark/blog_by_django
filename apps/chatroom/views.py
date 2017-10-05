@@ -10,6 +10,18 @@ from .models import *
 
 
 # Create your views here.
+def new_room(request):
+    new_room = None
+    while not new_room:
+        with transaction.atomic():
+            # generate random chatroom names
+            label = haikunator.Haikunator.haikunate()
+            if Chatroom.objects.filter(label=label).exists():
+                continue
+            new_room = Chatroom.objects.create(label=label)
+    return redirect('chatroom:chatroom', label=label)
+
+
 def chatroom(request, label):
     # create room if not exists, otherwise get room
     room, created = Chatroom.objects.get_or_create(label=label)

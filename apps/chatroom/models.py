@@ -25,7 +25,7 @@ class Chat(models.Model):
 
     @property
     def formatted_timestamp(self):
-        return self.timestamp.strftime('%b %-d %-I:%M %p')
+        return self.timestamp.strftime('%b %-d %-H:%M')
 
     def as_dict(self):
         return {'handle': self.handle, 'message': self.message, 'timestamp': self.formatted_timestamp}

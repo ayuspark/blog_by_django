@@ -26,7 +26,7 @@ SECRET_KEY = '%_*5=c@f8(on=_%g(hr)&v$kra(!gx6k9)d$ap=2k&ezkhsxlz'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'lolalyw.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'lolalyw.pythonanywhere.com', u'localhost']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'channels',
     'apps.blog',
     'apps.wall',
     'apps.chatroom',
@@ -56,6 +57,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'blog_by_django.urls'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "blog_by_django.routing.channel_routing",
+    },
+}
 
 TEMPLATES = [
     {
