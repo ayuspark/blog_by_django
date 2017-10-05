@@ -21,11 +21,11 @@ class Chat(models.Model):
     timestamp = models.DateTimeField(default=timezone.now, db_index=True)
 
     def __unicode__(self):
-        return '[{timestamp}] {handle}: {message}'.format(**self.as_dict())
+        return '[{timestamp}] {handle}: {chat}'.format(**self.as_dict())
 
     @property
     def formatted_timestamp(self):
         return self.timestamp.strftime('%b %-d %-H:%M')
 
     def as_dict(self):
-        return {'handle': self.handle, 'message': self.message, 'timestamp': self.formatted_timestamp}
+        return {'handle': self.handle, 'chat': self.chat, 'timestamp': self.formatted_timestamp}

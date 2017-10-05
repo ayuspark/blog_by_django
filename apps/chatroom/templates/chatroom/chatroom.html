@@ -8,16 +8,16 @@
 </p>
 <p>
     <label for="handle">Your name:</label>
-    <input id="handle" type="text" placeholder="handle">
+    <input id="handle" type="text" placeholder="handle" required>
 </p>
 <form id="chatform">
     <table id="chat_table">
         <tbody>
-            {% for message in messages %}
+            {% for chat in chats %}
             <tr>
-                <td>{{ message.formatted_timestamp }}</td>
-                <td>{{ message.handle }}</td>
-                <td>{{ message.message }}</td>
+                <td>{{ chat.formatted_timestamp }}</td>
+                <td>{{ chat.handle }}</td>
+                <td>{{ chat.chat }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -25,7 +25,7 @@
             <tr>
                 <td>Say something:</td>
                 <td colspan=2>
-                    <input id="chat" type="text" placeholder="say something">
+                    <input id="chat" type="text" placeholder="say something" required>
                     <button type="submit" id="say_it">Say it</button>
                 </td>
         </tfoot>
