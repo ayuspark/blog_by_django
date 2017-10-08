@@ -1,4 +1,4 @@
-# blog_by_django
+# django_wall
 blog project powered by Django
 
 A silly version of it is deployed at
