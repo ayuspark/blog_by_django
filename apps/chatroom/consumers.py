@@ -1,4 +1,3 @@
-import re
 import json
 import logging
 from channels import Group
@@ -11,7 +10,7 @@ log = logging.getLogger(__name__)
 
 
 @channel_session
-def ws_connect(message, **kwargs):
+def ws_connect(message):
     try:
         get_path = message['path'].strip('/').split('/')
         prefix = get_path[1]
@@ -41,7 +40,7 @@ def ws_connect(message, **kwargs):
     
     
 @channel_session
-def ws_receive(message, **kwargs):
+def ws_receive(message):
     # check if room in channel_session or room exist
     try:
         label = message.channel_session['room_label']
