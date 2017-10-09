@@ -62,7 +62,7 @@ ROOT_URLCONF = 'django_wall.urls'
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgiref.inmemory.ChannelLayer",
-        "ROUTING": "django_wall.routing.channel_routing",
+        "ROUTING": "apps.chatroom.routing.channel_routing",
     },
 }
 
